@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      `
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="OpenStack,">
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="听云轩" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="安装（queen版，下一篇讲用kolla-ansible来安装） 环境 123192.168.40.150 computer01    centos7   4.4.197192.168.40.151 controller192.168.40.152 cinder 1、配置主机名的映射(在/etc/hosts文件中添加相应的主机和ip映射) 2、配置时间同步，控制节点为ntp server 1234">
+<meta name="keywords" content="OpenStack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openstack(二)">
+<meta property="og:url" content="https://Chainyinghao.github.io/2020/03/09/openstack-1/index.html">
+<meta property="og:site_name" content="听云轩">
+<meta property="og:description" content="安装（queen版，下一篇讲用kolla-ansible来安装） 环境 123192.168.40.150 computer01    centos7   4.4.197192.168.40.151 controller192.168.40.152 cinder 1、配置主机名的映射(在/etc/hosts文件中添加相应的主机和ip映射) 2、配置时间同步，控制节点为ntp server 1234">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88trsP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88tHdU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88dPoT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88BY6J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88DsU0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88yLxU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/886OYt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88cUne.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/88gVUA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/882Yee.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/15/882Xf1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GUMLt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GUWO1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GU7fe.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GakXn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GaQ1J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GaG0x.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Gaw1H.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GaoBq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8GwNSe.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YhudK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YhlJe.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Yh0Jg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YhhYF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y4EtS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y4DAK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y4o4S.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y4H3Q.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y59CF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y5MgH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YIAzQ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YIKoV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YIUdx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YIgeI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YITyj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YIvfU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YoGh8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YorNV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Yo2jJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YohH1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YoH3D.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YTADs.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YTcIP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y7Uwn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8Y7ISO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YHp6g.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/16/8YbS4x.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/G6zEJP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/G6z3iq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/G6zcQO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/G6zhTA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/G6zqOg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gc1Wng.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gc8YLD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gc8vf1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GcGEtA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GcYrS1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GcYolt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GcYbm8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GcYXkQ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gcti0U.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gct7C9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gctqjx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GcN9Cd.png">
+<meta property="og:updated_time" content="2020-04-07T04:56:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="openstack(二)">
+<meta name="twitter:description" content="安装（queen版，下一篇讲用kolla-ansible来安装） 环境 123192.168.40.150 computer01    centos7   4.4.197192.168.40.151 controller192.168.40.152 cinder 1、配置主机名的映射(在/etc/hosts文件中添加相应的主机和ip映射) 2、配置时间同步，控制节点为ntp server 1234">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/03/15/88trsP.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://Chainyinghao.github.io/2020/03/09/openstack-1/">
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>openstack(二) | 听云轩</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">听云轩</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我在等风，也在等你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Chainyinghao.github.io/2020/03/09/openstack-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="某吱">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/03/18/AmNfuq.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听云轩">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">openstack(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T17:40:28+08:00">
+                2020-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/09/openstack-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/09/openstack-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 共浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17 min
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="安装（queen版，下一篇讲用kolla-ansible来安装）">安装（queen版，下一篇讲用kolla-ansible来安装）</h3>
+<h4 id="环境">环境</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.40.150 computer01    centos7   4.4.197</span><br><span class="line">192.168.40.151 controller</span><br><span class="line">192.168.40.152 cinder</span><br></pre></td></tr></table></figure>
+<p>1、配置主机名的映射(在/etc/hosts文件中添加相应的主机和ip映射)</p>
+<p>2、配置时间同步，控制节点为ntp server</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">所有节点：yum install chrony -y</span><br><span class="line">controller：</span><br><span class="line">vim /etc/chrony.conf</span><br><span class="line">    allow 192.168.0.0/16</span><br><span class="line">systemctl restart chronyd</span><br><span class="line"></span><br><span class="line">Computer01和cinder：</span><br><span class="line">vim /etc/chrony.conf</span><br><span class="line">    server controller iburst</span><br><span class="line"></span><br><span class="line">注释其他几行</span><br></pre></td></tr></table></figure>
+<p>测试：<br>
+在controller节点上：</p>
+<p><img src="https://s1.ax1x.com/2020/03/15/88trsP.png" alt="88trsP.png"></p>
+<p>其他节点上：</p>
+<p><img src="https://s1.ax1x.com/2020/03/15/88tHdU.png" alt="88tHdU.png"></p>
+<p>3、安装OpenStack包（所有节点）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install centos-release-openstack-queens -y</span><br><span class="line">yum upgrade</span><br><span class="line">yum install python-openstackclient -y</span><br><span class="line">yum install openstack-selinux -y</span><br></pre></td></tr></table></figure>
+<p>4、安装数据库（controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">yum install mariadb mariadb-server python2-PyMySQL -y</span><br><span class="line"></span><br><span class="line">vim /etc/my.cnf.d/mariadb-server.cnf </span><br><span class="line"></span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">log-error=/var/log/mariadb/mariadb.log</span><br><span class="line">pid-file=/var/run/mariadb/mariadb.pid</span><br><span class="line">default-storage-engine=Innodb</span><br><span class="line">bind-address=192.168.40.151        //controller的IP</span><br><span class="line">innodb_file_per_table=on</span><br><span class="line">max_connections=4096</span><br><span class="line">init-connect=&apos;SET NAMES utf8&apos;</span><br><span class="line">character-set-server=utf8</span><br><span class="line"></span><br><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>5、安装rabbitMQ（controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum install rabbitmq-server -y</span><br><span class="line">systemctl enable rabbitmq-server.service</span><br><span class="line">systemctl start rabbitmq-server.service</span><br><span class="line"></span><br><span class="line">添加用户并设置权限：</span><br><span class="line">rabbitmqctl add_user openstack 12345</span><br><span class="line">rabbitmqctl set_permissions -p / openstack &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
+<p>6、安装数据库缓存（controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install memcached python-memcached -y</span><br><span class="line">编辑/etc/sysconfig/memcached</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/15/88dPoT.png" alt="88dPoT.png"></p>
+<p>注：（options，后面不加controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable memcached.service</span><br><span class="line">systemctl start memcached.service</span><br></pre></td></tr></table></figure>
+<p>7、安装etcd（controller）</p>
+<p><a href="https://imgchr.com/i/88BY6J" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/15/88BY6J.png" alt="88BY6J.png"></a></p>
+<p>8、安装keystone（controller）</p>
+<ul>
+<li>创建keystone数据库并授权</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/15/88DsU0.png" alt="88DsU0.png"></p>
+<ul>
+<li>安装、配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-keystone httpd mod_wsgi -y</span><br></pre></td></tr></table></figure>
+<p>编辑 /etc/keystone/keystone.conf 文件：<br>
+<img src="https://s1.ax1x.com/2020/03/15/88yLxU.png" alt="88yLxU.png"></p>
+<ul>
+<li>同步keystone数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh -c &quot;keystone-manage db_sync&quot; keystone</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据库初始化</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</span><br><span class="line">keystone-manage credential_setup --keystone-user keystone --keystone-group keystone</span><br></pre></td></tr></table></figure>
+<ul>
+<li>引导身份认证</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keystone-manage bootstrap --bootstrap-password 123456 --bootstrap-admin-url http://controller:35357/v3/ --bootstrap-internal-url http://controller:5000/v3/ --bootstrap-public-url http://controller:5000/v3/ --bootstrap-region-id RegionOne</span><br></pre></td></tr></table></figure>
+<p>9、配置http服务</p>
+<ul>
+<li>编辑 /etc/httpd/conf/httpd.conf 文件，配置 ServerName 参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ServerName controller</span><br></pre></td></tr></table></figure>
+<ul>
+<li>/usr/share/keystone/wsgi-keystone.conf 链接文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动（如果报错，可关闭selinux）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable httpd.service</span><br><span class="line">systemctl start httpd.service</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置administrator账号</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export OS_USERNAME=admin</span><br><span class="line">export OS_PASSWORD=123456</span><br><span class="line">export OS_PROJECT_NAME=admin</span><br><span class="line">export OS_USER_DOMAIN_NAME=Default</span><br><span class="line">export OS_PROJECT_DOMAIN_NAME=Default</span><br><span class="line">export OS_AUTH_URL=http://controller:35357/v3</span><br><span class="line">export OS_IDENTITY_API_VERSION=3</span><br></pre></td></tr></table></figure>
+<p>10、创建domain，projects，users，roles</p>
+<ul>
+<li>创建域：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack domain create --description &quot;Domain&quot; example</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/15/886OYt.png" alt="886OYt.png"></p>
+<ul>
+<li>创建服务项目</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack project create --domain default   --description &quot;Service Project&quot; service</span><br></pre></td></tr></table></figure>
+<p><a href="https://imgchr.com/i/88cUne" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/15/88cUne.png" alt="88cUne.png"></a></p>
+<ul>
+<li>创建平台demo项目</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack project create --domain default --description &quot;Demo Project&quot; demo</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/15/88gVUA.png" alt="88gVUA.png"></p>
+<ul>
+<li>创建demo用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack user create --domain default  --password-prompt demo</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/15/882Yee.png" alt="882Yee.png"></p>
+<ul>
+<li>创建用户角色</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack role create user</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/15/882Xf1.png" alt="882Xf1.png"></p>
+<ul>
+<li>添加用户角色到demo项目和用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack role add --project demo --user demo user</span><br></pre></td></tr></table></figure>
+<p>11、检查配置</p>
+<ul>
+<li>取消环境变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unset OS_AUTH_URL OS_PASSWORD</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用admin申请token</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack --os-auth-url http://controller:35357/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name admin --os-username admin token issue</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GUMLt.png" alt="8GUMLt.png"></p>
+<ul>
+<li>使用demo申请token</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack --os-auth-url http://controller:5000/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name demo --os-username demo token issue</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GUWO1.png" alt="8GUWO1.png"></p>
+<ul>
+<li>通过脚本来生成token，为了提高可操作性和工作效率，可以创建一个统一而完整的openRC文件，其包括通用变量和特殊变量</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GU7fe.png" alt="8GU7fe.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source admin-openrc</span><br><span class="line">openstack token issue</span><br></pre></td></tr></table></figure>
+<p>12、安装glance服务（controller）</p>
+<ul>
+<li>创建glance数据库，并授权</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GakXn.png" alt="8GakXn.png"></p>
+<ul>
+<li>获取admin用户的环境变量，并创建服务认证</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source admin-openrc</span><br><span class="line">openstack user create --domain default --password-prompt glance</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GaQ1J.png" alt="8GaQ1J.png"></p>
+<ul>
+<li>将admin添加到glance的项目和用户中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack role add --project service --user glance admin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建glance项目</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack service create --name glance  --description &quot;OpenStack Image&quot; image</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建glance镜像服务的API端点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne image public http://controller:9292</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GaG0x.png" alt="8GaG0x.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne image internal http://controller:9292</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Gaw1H.png" alt="8Gaw1H.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne image admin http://controller:9292</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GaoBq.png" alt="8GaoBq.png"></p>
+<p>13、安装和配置glance组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-glance -y</span><br><span class="line">编辑 /etc/glance/glance-api.conf 文件：</span><br><span class="line">[database]      //配置数据库连接</span><br><span class="line">connection = mysql+pymysql://glance:123456@controller/glance</span><br><span class="line"></span><br><span class="line">[keystone_authtoken]        //和[paste_deploy]一起，配置keystone身份认证服务组件访问</span><br><span class="line">auth_uri = http://controller:5000</span><br><span class="line">auth_url = http://controller:35357</span><br><span class="line">memcached_servers = controller:11211</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">project_name = service</span><br><span class="line">username = glance</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[paste_deploy]</span><br><span class="line">flavor = keystone</span><br><span class="line"></span><br><span class="line">[glance_store]    //配置虚拟机的存储路径和存储方式</span><br><span class="line">stores = file,http</span><br><span class="line">default_store = file</span><br><span class="line">filesystem_store_datadir = /var/lib/glance/images/</span><br><span class="line"></span><br><span class="line">编辑 /etc/glance/glance-registry.conf 文件：</span><br><span class="line">[database]</span><br><span class="line">connection = mysql+pymysql://glance:123456@controller/glance</span><br><span class="line"></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_uri = http://controller:5000</span><br><span class="line">auth_url = http://controller:5000</span><br><span class="line">memcached_servers = controller:11211</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">project_name = service</span><br><span class="line">username = glance</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[paste_deploy]</span><br><span class="line">flavor = keystone</span><br><span class="line"></span><br><span class="line">同步镜像服务数据库：</span><br><span class="line">/bin/sh -c &quot;glance-manage db_sync&quot; glance</span><br><span class="line"></span><br><span class="line">启动：</span><br><span class="line">systemctl enable openstack-glance-api.service openstack-glance-registry.service</span><br><span class="line">systemctl start openstack-glance-api.service openstack-glance-registry.service</span><br></pre></td></tr></table></figure>
+<p>14、验证：</p>
+<ul>
+<li>获取admin用户的环境变量，且下载镜像：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">source admin-openrc</span><br><span class="line">wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img</span><br><span class="line"></span><br><span class="line">上传镜像（如果没有9292端口报错，可能是日志权限问题）：</span><br><span class="line">openstack image create &quot;cirros&quot; --file cirros-0.3.5-x86_64-disk.img --disk-format qcow2 --container-format bare --public</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8GwNSe.png" alt="8GwNSe.png"></p>
+<p>查看：</p>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YhudK.png" alt="8YhudK.png"></p>
+<p>15、安装配置computer（controller）</p>
+<ul>
+<li>创建nova_api，nova，nova_cell0数据库</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YhlJe.png" alt="8YhlJe.png"></p>
+<ul>
+<li>创建nova用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source admin-openrc</span><br><span class="line">openstack user create --domain default --password-prompt nova</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Yh0Jg.png" alt="8Yh0Jg.png"></p>
+<ul>
+<li>添加admin角色赋给项目和用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack role add --project service --user nova admin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建nova计算服务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack service create --name nova --description &quot;OpenStack Compute&quot; compute</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YhhYF.png" alt="8YhhYF.png"></p>
+<ul>
+<li>创建API服务端点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne compute public http://controller:8774/v2.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y4EtS.png" alt="8Y4EtS.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne compute internal http://controller:8774/v2.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y4DAK.png" alt="8Y4DAK.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne compute admin http://controller:8774/v2.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y4o4S.png" alt="8Y4o4S.png"></p>
+<ul>
+<li>创建placement服务用户</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y4H3Q.png" alt="8Y4H3Q.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack service create --name placement --description &quot;Placement API&quot; placement</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y59CF.png" alt="8Y59CF.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne placement public http://controller:8778</span><br><span class="line">openstack endpoint create --region RegionOne placement internal http://controller:8778</span><br><span class="line">openstack endpoint create --region RegionOne placement admin http://controller:8778</span><br></pre></td></tr></table></figure>
+<p>16、安装和配置nova组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-nova-api openstack-nova-conductor openstack-nova-console openstack-nova-novncproxy openstack-nova-scheduler openstack-nova-placement-api</span><br><span class="line"></span><br><span class="line">编辑 /etc/nova/nova.conf 文件：</span><br><span class="line">[DEFAULT]</span><br><span class="line">enabled_apis = osapi_compute,metadata</span><br><span class="line">transport_url = rabbit://openstack:123456@controller</span><br><span class="line">my_ip = 192.168.40.151</span><br><span class="line">use_neutron = True</span><br><span class="line">firewall_driver = nova.virt.firewall.NoopFirewallDriver</span><br><span class="line"></span><br><span class="line">[api_database]</span><br><span class="line">connection = mysql+pymysql://nova:123456@controller/nova_api</span><br><span class="line"></span><br><span class="line">[database]</span><br><span class="line">connection = mysql+pymysql://nova:123456@controller/nova</span><br><span class="line"></span><br><span class="line">[api]</span><br><span class="line">auth_strategy = keystone</span><br><span class="line"></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_url = http://controller:5000/v3 </span><br><span class="line">memcached_servers = controller:11211</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">project_name = service</span><br><span class="line">username = nova</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[vnc]</span><br><span class="line">enabled = true</span><br><span class="line">server_listen = $my_ip</span><br><span class="line">server_proxyclient_address = $my_ip</span><br><span class="line"></span><br><span class="line">[glance]</span><br><span class="line">api_servers = http://controller:9292</span><br><span class="line"></span><br><span class="line">[oslo_concurrency]</span><br><span class="line">lock_path = /var/lib/nova/tmp</span><br><span class="line"></span><br><span class="line">[placement]</span><br><span class="line">os_region_name = RegionOne</span><br><span class="line">project_domain_name = Default</span><br><span class="line">project_name = service</span><br><span class="line">auth_type = password</span><br><span class="line">user_domain_name = Default</span><br><span class="line">auth_url = http://controller:5000/v3</span><br><span class="line">username = placement</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">由于软件包的一个bug，需要在/etc/httpd/conf.d/00-nova-placement-api.conf 文件中添加如下配置：</span><br><span class="line">&lt;Directory /usr/bin&gt;</span><br><span class="line">   &lt;IfVersion &gt;= 2.4&gt;</span><br><span class="line">      Require all granted</span><br><span class="line">   &lt;/IfVersion&gt;</span><br><span class="line">   &lt;IfVersion &lt; 2.4&gt;</span><br><span class="line">      Order allow,deny</span><br><span class="line">      Allow from all</span><br><span class="line">   &lt;/IfVersion&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">重启httpd</span><br><span class="line"></span><br><span class="line">同步nova-api数据库：</span><br><span class="line">/bin/sh -c &quot;nova-manage api_db sync&quot; nova </span><br><span class="line"></span><br><span class="line">注册cell0数据库：</span><br><span class="line">/bin/sh -c &quot;nova-manage cell_v2 map_cell0&quot; nova</span><br><span class="line"></span><br><span class="line">创建cell1：</span><br><span class="line">/bin/sh -c &quot;nova-manage cell_v2 create_cell --name=cell1 --verbose&quot; nova</span><br><span class="line"></span><br><span class="line">同步nova数据库：</span><br><span class="line">/bin/sh -c &quot;nova-manage db sync&quot; nova</span><br></pre></td></tr></table></figure>
+<p>验证：<br>
+<img src="https://s1.ax1x.com/2020/03/16/8Y5MgH.png" alt="8Y5MgH.png"></p>
+<p>重启：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</span><br><span class="line">systemctl restart openstack-nova-api.service openstack-nova-consoleauth.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service</span><br></pre></td></tr></table></figure>
+<p>17、安装配置compute（computer节点）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-nova-compute</span><br><span class="line">编辑 /etc/nova/nova.conf 文件：</span><br><span class="line">[DEFAULT]</span><br><span class="line">enabled_apis = osapi_compute,metadata</span><br><span class="line">transport_url = rabbit://openstack:123456@controller</span><br><span class="line">my_ip = 192.168.40.150    //计算节点的网络管理IP地址</span><br><span class="line">use_neutron = True</span><br><span class="line">firewall_driver = nova.virt.firewall.NoopFirewallDriver</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[api]</span><br><span class="line">auth_strategy = keystone</span><br><span class="line"></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_url = http://controller:5000/v3</span><br><span class="line">memcached_servers = controller:11211</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">project_name = service</span><br><span class="line">username = nova</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[vnc]</span><br><span class="line">enabled = True</span><br><span class="line">server_listen = 0.0.0.0</span><br><span class="line">server_proxyclient_address = $my_ip</span><br><span class="line">novncproxy_base_url = http://controller:6080/vnc_auto.html</span><br><span class="line"></span><br><span class="line">[glance]</span><br><span class="line">api_servers = http://controller:9292</span><br><span class="line"></span><br><span class="line">[oslo_concurrency]</span><br><span class="line">lock_path = /var/lib/nova/tmp</span><br><span class="line"></span><br><span class="line">[placement]</span><br><span class="line">os_region_name = RegionOne</span><br><span class="line">project_domain_name = Default</span><br><span class="line">project_name = service</span><br><span class="line">auth_type = password</span><br><span class="line">user_domain_name = Default</span><br><span class="line">auth_url = http://controller:35357/v3</span><br><span class="line">username = placement</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[libvirt]</span><br><span class="line">virt_type=kvm</span><br><span class="line"></span><br><span class="line">启动：</span><br><span class="line">systemctl enable openstack-nova-compute</span><br><span class="line">systemctl enable libvirtd.service</span><br><span class="line">systemctl start libvirtd.service</span><br><span class="line">systemctl restart openstack-nova-compute.service</span><br></pre></td></tr></table></figure>
+<ul>
+<li>确认nova计算服务组件已经成功运行和注册：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">controller：</span><br><span class="line">source admin-openrc</span><br><span class="line">openstack compute service list --service nova-compute</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YIAzQ.png" alt="8YIAzQ.png"></p>
+<ul>
+<li>发现计算节点：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh -c &quot;nova-manage cell_v2 discover_hosts --verbose&quot; nova</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YIKoV.png" alt="8YIKoV.png"></p>
+<p>18、在controller上验证计算服务操作</p>
+<ul>
+<li>列出服务组件</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YIUdx.png" alt="8YIUdx.png"></p>
+<ul>
+<li>列出身份服务中的API端点与身份服务的连接</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YIgeI.png" alt="8YIgeI.png"></p>
+<ul>
+<li>列出镜像</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YITyj.png" alt="8YITyj.png"></p>
+<ul>
+<li>检查cells和placement API</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YIvfU.png" alt="8YIvfU.png"></p>
+<p>19、安装和配置网络组件（controller）</p>
+<ul>
+<li>创建数据库以及授权</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YoGh8.png" alt="8YoGh8.png"></p>
+<ul>
+<li>创建用户以及服务</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack user create --domain default --password-prompt neutron</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YorNV.png" alt="8YorNV.png"></p>
+<ul>
+<li>将admin赋给neutron和service</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack role add --project service --user neutron admin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建service entity</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack service create --name neutron --description &quot;OpenStack Networking&quot; network</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Yo2jJ.png" alt="8Yo2jJ.png"></p>
+<ul>
+<li>创建网络服务API 端点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne network public http://controller:9696</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YohH1.png" alt="8YohH1.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne network internal http://controller:9696</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YoH3D.png" alt="8YoH3D.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne network admin http://controller:9696</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YTADs.png" alt="8YTADs.png"></p>
+<p>20、配置网络部分（controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-linuxbridge ebtables</span><br><span class="line">配置服务组件，编辑 /etc/neutron/neutron.conf 文件：</span><br><span class="line">[DEFAULT]</span><br><span class="line">auth_strategy = keystone</span><br><span class="line">core_plugin = ml2</span><br><span class="line">service_plugins =</span><br><span class="line">transport_url = rabbit://openstack:123456@controller</span><br><span class="line">notify_nova_on_port_status_changes = true</span><br><span class="line">notify_nova_on_port_data_changes = true</span><br><span class="line"></span><br><span class="line">[database]</span><br><span class="line">connection = mysql+pymysql://neutron:123456@controller/neutron</span><br><span class="line"></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_uri = http://controller:5000</span><br><span class="line">auth_url = http://controller:35357</span><br><span class="line">memcached_servers = controller:11211</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">project_name = service</span><br><span class="line">username = neutron</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[nova]</span><br><span class="line">auth_url = http://controller:35357</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">region_name = RegionOne</span><br><span class="line">project_name = service</span><br><span class="line">username = nova</span><br><span class="line">password = 123456:</span><br><span class="line"></span><br><span class="line">[oslo_concurrency]</span><br><span class="line">lock_path = /var/lib/neutron/tmp</span><br></pre></td></tr></table></figure>
+<p>21、配置网络二层插件（controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">编辑 /etc/neutron/plugins/ml2/ml2_conf.ini 文件：</span><br><span class="line">[ml2]</span><br><span class="line">type_drivers = flat,vlan</span><br><span class="line">tenant_network_types =</span><br><span class="line">mechanism_drivers = linuxbridge</span><br><span class="line">extension_drivers = port_security</span><br><span class="line"></span><br><span class="line">[ml2_type_flat]</span><br><span class="line">flat_networks = provider</span><br><span class="line"></span><br><span class="line">[securitygroup]</span><br><span class="line">enable_ipset = true</span><br><span class="line"></span><br><span class="line">配置 Linux 网桥，编辑 /etc/neutron/plugins/ml2/linuxbridge_agent.ini 文件：</span><br><span class="line">[linux_bridge]</span><br><span class="line">physical_interface_mappings = provider:ens33</span><br><span class="line"></span><br><span class="line">[vxlan]</span><br><span class="line">enable_vxlan = false</span><br><span class="line"></span><br><span class="line">[securitygroup]</span><br><span class="line">enable_security_group = true</span><br><span class="line">firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YTcIP.png" alt="8YTcIP.png"></p>
+<p>将其设置为1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">配置 DHCP 服务编辑 /etc/neutron/dhcp_agent.ini 文件:</span><br><span class="line">[DEFAULT]</span><br><span class="line">interface_driver = linuxbridge</span><br><span class="line">dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq</span><br><span class="line">enable_isolated_metadata = true</span><br><span class="line"></span><br><span class="line">配置 metadata，编辑 /etc/neutron/metadata_agent.ini 文件:</span><br><span class="line">[DEFAULT]</span><br><span class="line">nova_metadata_host = controller</span><br><span class="line">metadata_proxy_shared_secret = 123456</span><br><span class="line"></span><br><span class="line">配置计算服务使用网络服务，编辑 /etc/nova/nova.conf 文件:</span><br><span class="line">[neutron]</span><br><span class="line">url = http://controller:9696</span><br><span class="line">auth_url = http://controller:35357</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">region_name = RegionOne</span><br><span class="line">project_name = service</span><br><span class="line">username = neutron</span><br><span class="line">password = 123456</span><br><span class="line">service_metadata_proxy = true</span><br><span class="line">metadata_proxy_shared_secret = 123456</span><br><span class="line"></span><br><span class="line">创建服务软链接:</span><br><span class="line">ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</span><br><span class="line"></span><br><span class="line">同步数据库:</span><br><span class="line">/bin/sh -c &quot;neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head&quot; neutron</span><br><span class="line"></span><br><span class="line">重启 compute API 服务:</span><br><span class="line">systemctl restart openstack-nova-api.service</span><br><span class="line"></span><br><span class="line">配置网络服务开机启动:</span><br><span class="line">systemctl enable neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service</span><br><span class="line">systemctl start neutron-server.service neutron-linuxbridge-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service</span><br></pre></td></tr></table></figure>
+<p>22、配置compute节点网络服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-neutron-linuxbridge ebtables ipset</span><br><span class="line"></span><br><span class="line">配置公共组件，编辑 /etc/neutron/neutron.conf 文件：</span><br><span class="line">[DEFAULT]</span><br><span class="line">auth_strategy = keystone</span><br><span class="line">transport_url = rabbit://openstack:123456@controller</span><br><span class="line"></span><br><span class="line">[keystone_authtoken]</span><br><span class="line">auth_uri = http://controller:5000</span><br><span class="line">auth_url = http://controller:35357</span><br><span class="line">memcached_servers = controller:11211</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">project_name = service</span><br><span class="line">username = neutron</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">[oslo_concurrency]</span><br><span class="line">lock_path = /var/lib/neutron/tmp</span><br><span class="line"></span><br><span class="line">配置 Linux 网桥，编辑 /etc/neutron/plugins/ml2/linuxbridge_agent.ini 文件：</span><br><span class="line">[linux_bridge]</span><br><span class="line">physical_interface_mappings = provider:ens33</span><br><span class="line"></span><br><span class="line">[vxlan]</span><br><span class="line">enable_vxlan = false</span><br><span class="line"></span><br><span class="line">[securitygroup]</span><br><span class="line">enable_security_group = true</span><br><span class="line">firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver</span><br><span class="line"></span><br><span class="line">配置计算节点网络服务，编辑 /etc/nova/nova.conf 文件：</span><br><span class="line">[neutron]</span><br><span class="line">url = http://controller:9696</span><br><span class="line">auth_url = http://controller:35357</span><br><span class="line">auth_type = password</span><br><span class="line">project_domain_name = default</span><br><span class="line">user_domain_name = default</span><br><span class="line">region_name = RegionOne</span><br><span class="line">project_name = service</span><br><span class="line">username = neutron</span><br><span class="line">password = 123456</span><br><span class="line"></span><br><span class="line">重启 compute 服务：</span><br><span class="line">systemctl restart openstack-nova-compute.service</span><br><span class="line"></span><br><span class="line">设置网桥服务开机启动：</span><br><span class="line">systemctl enable neutron-linuxbridge-agent.service</span><br><span class="line">systemctl start neutron-linuxbridge-agent.service</span><br></pre></td></tr></table></figure>
+<p>23、安装horizon组件（controller）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">yum install openstack-dashboard -y</span><br><span class="line"></span><br><span class="line">编辑 /etc/openstack-dashboard/local_settings 文件：</span><br><span class="line">OPENSTACK_HOST = &quot;controller&quot;</span><br><span class="line">ALLOWED_HOSTS = [&apos;*&apos;]</span><br><span class="line"></span><br><span class="line">###配置 memcache 会话存储###</span><br><span class="line">SESSION_ENGINE = &apos;django.contrib.sessions.backends.cache&apos;</span><br><span class="line"></span><br><span class="line">CACHES = &#123;</span><br><span class="line">    &apos;default&apos;: &#123;</span><br><span class="line">        &apos;BACKEND&apos;: &apos;django.core.cache.backends.memcached.MemcachedCache&apos;,</span><br><span class="line">        &apos;LOCATION&apos;: &apos;controller:11211&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">###开启身份认证 API 版本 v3###</span><br><span class="line">OPENSTACK_KEYSTONE_URL = &quot;http://%s:5000/v3&quot; % OPENSTACK_HOST</span><br><span class="line"></span><br><span class="line">###开启 domains 版本支持###</span><br><span class="line">OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True</span><br><span class="line"></span><br><span class="line">###配置 API 版本####</span><br><span class="line">OPENSTACK_API_VERSIONS = &#123;</span><br><span class="line">    &quot;identity&quot;: 3,</span><br><span class="line">    &quot;image&quot;: 2,</span><br><span class="line">    &quot;volume&quot;: 2,</span><br><span class="line">&#125;</span><br><span class="line">OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = &apos;Default&apos;</span><br><span class="line"></span><br><span class="line">OPENSTACK_NEUTRON_NETWORK = &#123;</span><br><span class="line">    &apos;enable_router&apos;: False,</span><br><span class="line">    &apos;enable_quotas&apos;: False,</span><br><span class="line">    &apos;enable_distributed_router&apos;: False,</span><br><span class="line">    &apos;enable_ha_router&apos;: False,</span><br><span class="line">    &apos;enable_lb&apos;: False,</span><br><span class="line">    &apos;enable_firewall&apos;: False,</span><br><span class="line">    &apos;enable_***&apos;: False,</span><br><span class="line">    &apos;enable_fip_topology_check&apos;: False,</span><br><span class="line">#修改时，注意底部采用原有的“&#125;”，重复会无法重启 web 服务</span><br><span class="line"></span><br><span class="line">TIME_ZONE = &quot;Asia/Shanghai&quot;</span><br><span class="line">重启 web 服务和会话存储:</span><br><span class="line">systemctl restart httpd.service memcached.service</span><br></pre></td></tr></table></figure>
+<ul>
+<li>前端访问：<br>
+访问 <a href="http://192.168.40151/dashborad" target="_blank" rel="noopener">http://192.168.40151/dashborad</a> 查看 openstack 的 web 页面：</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y7Uwn.png" alt="8Y7Uwn.png"></p>
+<p>如果报错：</p>
+<p><img src="https://s1.ax1x.com/2020/03/16/8Y7ISO.png" alt="8Y7ISO.png"></p>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YHp6g.png" alt="8YHp6g.png"></p>
+<p>在WSGISocketPrefix run/wsgi 下添加：<br>
+**WSGIApplicationGroup %{GLOBAL}**然后重启</p>
+<p><img src="https://s1.ax1x.com/2020/03/16/8YbS4x.png" alt="8YbS4x.png"></p>
+<p>24、安装、配置cinder</p>
+<ul>
+<li>在controller节点上，配置数据库，创建cinder数据库、和前面一样，创建授权用户</li>
+<li>加载admin-user环境变量，并创建identity服务凭据（123456）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source admin-openrc </span><br><span class="line">openstack user create --domain default --password-prompt cinder</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/G6zEJP.png" alt="G6zEJP.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将admin role赋予cinder用户和service project</span><br><span class="line">openstack role add --project service --user cinder admin</span><br><span class="line">创建cinder和cinder v2服务实体（最好是创建v2 v3）</span><br><span class="line">openstack service create --name cinder --description &quot;OpenStack block storage&quot; volume</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/G6z3iq.png" alt="G6z3iq.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack service create --name cinderv2 --description &quot;OpenStack block storage&quot; volumev2</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/G6zcQO.png" alt="G6zcQO.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">创建API endpoint</span><br><span class="line">openstack endpoint create --region RegionOne volume public http://controller:8776/v1/%\(tenant_id\)s</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/G6zhTA.png" alt="G6zhTA.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne volume internal http://controller:8776/v1/%\(tenant_id\)s</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/G6zqOg.png" alt="G6zqOg.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne volume admin http://controller:8776/v1/%\(tenant_id\)s</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/Gc1Wng.png" alt="Gc1Wng.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne volumev2 public http://controller:8776/v2/%\(tenant_id\)s</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/Gc8YLD.png" alt="Gc8YLD.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne volumev2 internal http://controller:8776/v2/%\(tenant_id\)s</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/Gc8vf1.png" alt="Gc8vf1.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openstack endpoint create --region RegionOne volumev2 admin http://controller:8776/v2/%\(tenant_id\)s</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/04/07/GcGEtA.png" alt="GcGEtA.png"></p>
+<p>安装和配置cinder组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openstack-cinder</span><br></pre></td></tr></table></figure>
+<p>编辑/etc/cinder.conf文件：<br>
+配置数据库连接：</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/GcYrS1.png" alt="GcYrS1.png"></p>
+<p>配置rabbitmq：<br>
+<img src="https://s1.ax1x.com/2020/04/07/GcYolt.png" alt="GcYolt.png"><br>
+<img src="https://s1.ax1x.com/2020/04/07/GcYbm8.png" alt="GcYbm8.png"><br>
+配置认证服务：<br>
+<img src="https://s1.ax1x.com/2020/04/07/GcYXkQ.png" alt="GcYXkQ.png"><br>
+<img src="https://s1.ax1x.com/2020/04/07/Gcti0U.png" alt="Gcti0U.png"><br>
+配置节点管理IP地址：<br>
+<img src="https://s1.ax1x.com/2020/04/07/Gct7C9.png" alt="Gct7C9.png"><br>
+配置锁路径：<br>
+<img src="https://s1.ax1x.com/2020/04/07/Gctqjx.png" alt="Gctqjx.png"><br>
+将cinder服务信息同步到数据库（忽略输出中不推荐的信息）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh -c &quot;cinder-manage db sync&quot; cinder</span><br></pre></td></tr></table></figure>
+<p>编辑nova.conf：<br>
+<img src="https://s1.ax1x.com/2020/04/07/GcN9Cd.png" alt="GcN9Cd.png"><br>
+服务启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart openstack-nova-api</span><br><span class="line">systemctl enable openstack-cinder-api openstack-cinder-scheduler</span><br><span class="line">systemctl restart openstack-cinder-api openstack-cinder-scheduler</span><br></pre></td></tr></table></figure>
+<p>25、安装和配置存储节点（cinder）</p>
+<ul>
+<li>安装并启动lvm2</li>
+<li>创建逻辑卷和卷组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pvcreate /dev/sdb</span><br><span class="line">vgcreate cinder-volumes /dev/sdb</span><br><span class="line">```	</span><br><span class="line">cinder块存储卷一般只能被虚拟机实例访问使用，但是存储节点操作系统可以管理包括磁盘在内的本地硬件设备，操作系统中的LVM卷扫描工具可以扫描/dev目录下的所有设备，如果项目在他们的卷上使用LVM，扫描工具检测到这些卷时会尝试缓存它们，可能会在底层操作系统和项目卷上产生各种问题。您必须重新配置LVM，让它只扫描包含``cinder-volume``卷组的设备。</span><br><span class="line"></span><br><span class="line">编辑``/etc/lvm/lvm.conf``文件并完成下面的操作：</span><br><span class="line"></span><br><span class="line">![GcNM2n.png](https://s1.ax1x.com/2020/04/07/GcNM2n.png)</span><br><span class="line"></span><br><span class="line">每个过滤器组中的元素都以``a``开头，即为 accept，或以 r 开头，即为**reject**，并且包括一个设备名称的正则表达式规则。过滤器组必须以``r/.*/``结束，过滤所有保留设备。您可以使用 :命令:`vgs -vvvv` 来测试过滤器。</span><br><span class="line"></span><br><span class="line">* 安装组件</span><br></pre></td></tr></table></figure>
+<p>yum install openstack-cinder targetcli python-keystone -y</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">* 编辑配置文件：</span><br><span class="line">配置数据库：</span><br><span class="line">![GcNwx1.png](https://s1.ax1x.com/2020/04/07/GcNwx1.png)</span><br><span class="line">配置MQ：</span><br><span class="line">![GcNfxI.png](https://s1.ax1x.com/2020/04/07/GcNfxI.png)</span><br><span class="line">[![GcNORs.png](https://s1.ax1x.com/2020/04/07/GcNORs.png)](https://imgchr.com/i/GcNORs)</span><br><span class="line">配置认证：</span><br><span class="line">![GcUFJJ.png](https://s1.ax1x.com/2020/04/07/GcUFJJ.png)</span><br><span class="line">![GcUVQ1.png](https://s1.ax1x.com/2020/04/07/GcUVQ1.png)</span><br><span class="line">配置my_ip：</span><br><span class="line">![GcU4fJ.png](https://s1.ax1x.com/2020/04/07/GcU4fJ.png)</span><br><span class="line">配置lvm：</span><br><span class="line">![GcaMn0.png](https://s1.ax1x.com/2020/04/07/GcaMn0.png)</span><br><span class="line">![GcaQBV.png](https://s1.ax1x.com/2020/04/07/GcaQBV.png)</span><br><span class="line">配置镜像位置：</span><br><span class="line">![GcaGh4.png](https://s1.ax1x.com/2020/04/07/GcaGh4.png)</span><br><span class="line">配置锁路径：</span><br><span class="line">![Gcd9C4.png](https://s1.ax1x.com/2020/04/07/Gcd9C4.png)</span><br><span class="line">* 配置启动：</span><br></pre></td></tr></table></figure>
+<p>systemctl enable openstack-cinder-volume.service target.service<br>
+systemctl start openstack-cinder-volume.service target.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* 验证：</span><br><span class="line">source admin-openrc</span><br><span class="line">[![GcdeUO.png](https://s1.ax1x.com/2020/04/07/GcdeUO.png)](https://imgchr.com/i/GcdeUO)</span><br><span class="line">如果报错：</span><br><span class="line">ERROR: publicURL endpoint for volumev3 service not found</span><br><span class="line">	</span><br><span class="line">在admin-openrc中加入：</span><br></pre></td></tr></table></figure>
+<p>export OS_VOLUME_API_VERSION=2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">加载demo脚本并创建一个1G的卷：</span><br></pre></td></tr></table></figure>
+<p>source demo-openrc<br>
+cinder create  --name test1 1</p>
+<pre><code>![GcdRG4.png](https://s1.ax1x.com/2020/04/07/GcdRG4.png)
+然后查看所创建的卷：
+![GcdLJe.png](https://s1.ax1x.com/2020/04/07/GcdLJe.png)
+
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 ------</div>
+    
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://s2.ax1x.com/2019/03/18/AmJ4HO.th.png" alt="某吱 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://s2.ax1x.com/2019/03/18/AmJ2g1.th.jpg" alt="某吱 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    某吱
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://Chainyinghao.github.io/2020/03/09/openstack-1/" title="openstack(二)">https://Chainyinghao.github.io/2020/03/09/openstack-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://chainyinghao.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenStack/" rel="tag"><i class="fa fa-tag"></i> OpenStack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/09/openstack/" rel="next" title="openstack（一）">
+                <i class="fa fa-chevron-left"></i> openstack（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/07/openstack-2/" rel="prev" title="openstack（三）">
+                openstack（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/03/18/AmNfuq.png" alt="某吱">
+            
+              <p class="site-author-name" itemprop="name">某吱</p>
+              <p class="site-description motion-element" itemprop="description">世间所有的相遇，都是久别重逢</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index-1.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index-10.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Chainyinghao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:dyinghao@outlook.com.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装（queen版，下一篇讲用kolla-ansible来安装）"><span class="nav-number">1.</span> <span class="nav-text">安装（queen版，下一篇讲用kolla-ansible来安装）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">1.1.</span> <span class="nav-text">环境</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">某吱</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">86.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://Chainyinghao.github.io/2020/03/09/openstack-1/';
+          this.page.identifier = '2020/03/09/openstack-1/';
+          this.page.title = 'openstack(二)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        av: AV, 
+        el: '#comments' ,
+        appId: 'xwjAmd2kJjN5tPDytwQsYVDK-gzGzoHsz',
+        appKey: 'KN48BrkKriUVfabEygYYUc6e',
+        placeholder: 'ヾ?≧?≦)o来啊，造作啊',
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":300,"hOffset":20,"vOffset":-200},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>

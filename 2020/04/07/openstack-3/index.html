@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      `
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="OpenStack,">
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="听云轩" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Nova计算服务组件是OpenStack中非常重要、核心的部分，负责承载和管理云计算系统，与其他组件有密切关系。     Nova计算服务组件使用基于消息，无共享、松耦合无状态的架构。OpenStack项目中的核心服务组件都运行在多台主机节点上，包括Nova，cinder，neutron，swift和glance等服务组件，状态信息都存储在数据库中。控制节点服务通过HTTP与内部服务进行交">
+<meta name="keywords" content="OpenStack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openstack（四）">
+<meta property="og:url" content="https://Chainyinghao.github.io/2020/04/07/openstack-3/index.html">
+<meta property="og:site_name" content="听云轩">
+<meta property="og:description" content="Nova计算服务组件是OpenStack中非常重要、核心的部分，负责承载和管理云计算系统，与其他组件有密切关系。     Nova计算服务组件使用基于消息，无共享、松耦合无状态的架构。OpenStack项目中的核心服务组件都运行在多台主机节点上，包括Nova，cinder，neutron，swift和glance等服务组件，状态信息都存储在数据库中。控制节点服务通过HTTP与内部服务进行交">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgGbQ0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgJapn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/Gg0CqI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgB5u9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgDCUP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgDFC8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgDWIP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgDvGT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgrBoq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgroY6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/07/GgsCp8.png">
+<meta property="og:updated_time" content="2020-05-06T06:43:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="openstack（四）">
+<meta name="twitter:description" content="Nova计算服务组件是OpenStack中非常重要、核心的部分，负责承载和管理云计算系统，与其他组件有密切关系。     Nova计算服务组件使用基于消息，无共享、松耦合无状态的架构。OpenStack项目中的核心服务组件都运行在多台主机节点上，包括Nova，cinder，neutron，swift和glance等服务组件，状态信息都存储在数据库中。控制节点服务通过HTTP与内部服务进行交">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/04/07/GgGbQ0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://Chainyinghao.github.io/2020/04/07/openstack-3/">
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>openstack（四） | 听云轩</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">听云轩</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我在等风，也在等你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Chainyinghao.github.io/2020/04/07/openstack-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="某吱">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/03/18/AmNfuq.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听云轩">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">openstack（四）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-07T13:34:15+08:00">
+                2020-04-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/07/openstack-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/07/openstack-3/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 共浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 min
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>    Nova计算服务组件是OpenStack中非常重要、核心的部分，负责承载和管理云计算系统，与其他组件有密切关系。</p>
+<p>    Nova计算服务组件使用基于消息，无共享、松耦合无状态的架构。OpenStack项目中的核心服务组件都运行在多台主机节点上，包括Nova，cinder，neutron，swift和glance等服务组件，状态信息都存储在数据库中。控制节点服务通过HTTP与内部服务进行交互，但与scheduler服务、网络和卷服务的通信依赖高级消息队列协议进行。为避免消息阻塞而造成长时间等待响应，Nova计算服务组件采用异步调用的机制，当请求被接收后，响应被触发，发送回执，而不关注该请求是否被处理。</p>
+<p>    OpenStack项目中的控制节点服务影响着整个云环境的状态，API服务器为控制节点作为web服务前端而服务，处理各种交互信息，计算节点提供各种计算资源和计算服务，Nova计算服务组件中的网络服务提供虚拟网络。</p>
+<ul>
+<li>driver框架</li>
+</ul>
+<p>    OpenStack作为开放的云操作系统，其开放性体现在采用了基于driver的框架。以nova为例，OpenStack的计算节点支持多种hypervisor。包括KVM、hyper-V、VMware、XEN、docker等。</p>
+<p>    Nova-compute为这些hypervisor定义了统一的接口，hypervisor只需要实现这些接口就可以driver的形式插入到OpenStack中去使用。</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/GgGbQ0.png" alt="GgGbQ0.png"></p>
+<p>    在nova-compute的配置文件/etc/nova/nova.conf中，由compute-driver配置项指定该计算节点使用哪一种hypervisor的driver。</p>
+<p><a href="https://imgchr.com/i/GgJapn" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/07/GgJapn.png" alt="GgJapn.png"></a></p>
+<ul>
+<li>关于messaging</li>
+</ul>
+<p>    在创建虚拟机的过程中，nova-*子服务之间的调用严重依赖messaging。这是因为它是采用了异步调用的方式。</p>
+<ul>
+<li>同步调用</li>
+</ul>
+<p>    API直接调用scheduler的接口就是直接调用，其特点是API发出请求后需要一直等待，直到scheduler完成对compute的调度，将结果返回给API后API才能够继续做后面的工作。</p>
+<ul>
+<li>异步调用</li>
+</ul>
+<p>    API通过messaging间接调用scheduler就是异步调用，其特点就是API发出请求后不需要等待，直接返回，继续做后面的事。scheduler从messaging接收到请求后执行调度，完成后将结果也通过messaging发送给API。</p>
+<p>好处：</p>
+<ul>
+<li>解耦各子服务：子服务不需要知道其他服务运行在哪里，只需要发送消息给messaging就能完成调度</li>
+<li>提高性能：无需等待返回结果，这样就可以执行更多的工作，提高系统的吞吐量。</li>
+<li>提高伸缩性：子服务可以根据需要进行扩展，启动更多的实例处理更多的请求，在提高可用性的同时也提高了整个伸缩性。而且这种变化不会影响到其他子服务。</li>
+</ul>
+<h4 id="nova组件">nova组件</h4>
+<ul>
+<li>Nova-api service：负责对终端用户调用compute API的接收和反馈</li>
+<li>Nova-api-metadata：负责接收虚拟机对metadata（元数据）访问请求，一般部署nova-network的多主机模式才会用nova-api-metadata。</li>
+<li>Nova-compute：该服务通过hypervisor APIs（XenAPI、libvirt for KVM or QEMU、VMwareAPI）创建和终止虚拟机实例。该服务接收消息队列中的信息，执行一系列操作命令，如创建和更新虚拟机实例状态。</li>
+<li>Nova-scheduler：该服务接收消息队列中的请求，从而决定虚拟机实例运行在哪个计算节点上。</li>
+<li>Nova-conductor：nova-compute经常需要更新数据库，但是出于安全性和伸缩性的考虑，nova-compute不会直接访问数据库，而是交由nova-conductor去处理，并且这两个服务不能安装在同一个节点上。</li>
+</ul>
+<p>    我们可以通过nova service-list查看具体安装了哪些组件：</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/Gg0CqI.png" alt="Gg0CqI.png"></p>
+<h4 id="请求流程">请求流程</h4>
+<ul>
+<li>客户或程序向api（nova-api）发送创建虚拟机的请求。</li>
+<li>API对请求做一些必要的处理后，向message（rabbitMQ）发送了消息，让scheduler创建一个虚拟机</li>
+<li>scheduler从messaging获取到API发送的请求后，执行调度算法，从若干节点中选出节点A。</li>
+<li>scheduler向messaging发送消息，告知在A上创建这个虚拟机</li>
+<li>计算节点A的compute（nova-compute）从messaging中获取到scheduler发给他的消息后，然后在本节点的hypervisor上启动虚拟机。</li>
+</ul>
+<p>    而对于其中nova-compute而言，它所做的事有这些：</p>
+<p>     （1）为instance准备资源，根据指定的flavor依次为instance分配内存、磁盘和vCPU。<br>
+     （2）创建instance的镜像文件，它会先检查是否已经下载，如果没有，则会先向glance去下载相应的镜像文件到本地，然后通过qemu-img创建镜像。<br>
+     （3）创建实例的XML文件<br>
+     （4）创建虚拟网络以及启动实例</p>
+<p>    在虚机创建的过程中，compute如果需要查询或者更新数据库信息，会通过messaging向conductor（nova-conductor）发送消息。</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/GgB5u9.png" alt="GgB5u9.png"></p>
+<h4 id="调度方式">调度方式</h4>
+<p>    在nova.conf中，nova通过schedulerdriver、scheduleravailable_filters和schedulerdefaultfilters这三个参数来配置nova-scheduler。</p>
+<p>1、filter scheduler</p>
+<p>    它是nova-scheduler默认的调度器，调度过程分为两步：</p>
+<ul>
+<li>通过过滤器（filter）选择满足条件的计算节点</li>
+<li>通过权重计算选择在最优（权重值最大）的计算节点上创建instance。</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/04/07/GgDCUP.png" alt="GgDCUP.png"></p>
+<p>    它也允许使用第三方scheduler，配置好driver就行。也可以使用多个filter一次进行过滤，过滤之后的节点再通过计算权重选出最合适的节点。</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/GgDFC8.png" alt="GgDFC8.png"></p>
+<ul>
+<li>开始有6个计算节点</li>
+<li>通过filter过滤，刷了两个</li>
+<li>然后计算权重，权重高的host5入选</li>
+</ul>
+<p>2、filter</p>
+<p>    当filterscheduler需要执行调度操作的时候，会让filter对计算节点进行判断，返回true或者false。</p>
+<p>    Nova.conf中available_filters选项用于配置配置可用的filter：</p>
+<p><a href="https://imgchr.com/i/GgDWIP" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/07/GgDWIP.png" alt="GgDWIP.png"></a></p>
+<p>    另外还有一个选项用于指定scheduler真正使用的filter，默认值：</p>
+<p><a href="https://imgchr.com/i/GgDvGT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/07/GgDvGT.png" alt="GgDvGT.png"></a></p>
+<p>    Filter scheduler将按照列表中的顺序依次过滤。</p>
+<ul>
+<li>Retryfilter</li>
+</ul>
+<p>    作用是刷掉之前已经调度过的节点。比如说A、B、C三个节点都通过了过滤，最终A因为权重最大被选中，但是由于某个原因，操作在A上失败了，默认情况下nova-scheduler会重新执行过滤操作（默认是3，max_attempts），那么这时候retryfilter就会将A直接刷掉，避免操作再次失败。</p>
+<ul>
+<li>Availabilityzonefilter</li>
+</ul>
+<p>    为提高容灾性和提供隔离服务，可以将计算节点划分到不同的availability zone中。OpenStack默认有一个命名为nova的availability zone，所有的计算节点初始都放在nova中。创建instance时，需要指定将instance部署到在哪个zone中。在做filter的时候，将不属于指定zone的计算节点过滤掉。</p>
+<ul>
+<li>Ramfilter</li>
+</ul>
+<p>    将不能满足flavor内存需求的计算节点过滤掉。需要注意的是：为了提高系统的资源使用率，OpenStack在计算节点可用内存是允许overcommit，也就是说可以超过实际内存的大小。超过的程度通过文件中参数来控制：</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/GgrBoq.png" alt="GgrBoq.png"></p>
+<ul>
+<li>Diskfilter</li>
+</ul>
+<p>    将不能满足flavor磁盘需求的计算节点过滤掉，和上面一样，允许overcommit。</p>
+<p><a href="https://imgchr.com/i/GgroY6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/04/07/GgroY6.png" alt="GgroY6.png"></a></p>
+<ul>
+<li>Corefilter</li>
+</ul>
+<p>    将不满足flavor vcpu需求的计算节点过滤掉。</p>
+<p><img src="https://s1.ax1x.com/2020/04/07/GgsCp8.png" alt="GgsCp8.png"></p>
+<ul>
+<li>Computefilter</li>
+</ul>
+<p>    保证只有nova-compute服务正常工作的计算节点，才能够被调度。</p>
+<ul>
+<li>Computecapabiliesfilter</li>
+</ul>
+<p>    如果想将instance指定部署到x86_64架构的节点上，就可以利用它。</p>
+<ul>
+<li>Imagepropertiesfilter</li>
+</ul>
+<p>    根据所选image的属性来筛选匹配的计算节点。跟flavor类似，image也有metadata用于指定其属性</p>
+<ul>
+<li>Servergroupantiaffinityfilter</li>
+</ul>
+<p>    可以尽量将instance分散部署到不同的节点上。为保证分散部署，可以进行如下操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">• 创建一个anti-affinity策略的server group：</span><br><span class="line">Nova  server-group-create  --policy anti-affinity group-1</span><br><span class="line"></span><br><span class="line">• 依次创建instance，将instance放到group-1中：</span><br><span class="line">Nova boot --image IMAGEID --flavor 1 -hint group=group-1 ins1</span><br><span class="line">Nova boot --image IMAGEID --flavor 1 -hint group=group-1 ins2</span><br><span class="line">Nova boot --image IMAGEID --flavor 1 -hint group=group-1 ins3</span><br><span class="line"></span><br><span class="line">调度使会将ins1、2、3部署到不同的计算节点，创建instance的时候，如果没有指定server group,servergroupantiaffinityfilter会直接通过，不做任何过滤。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Servergroupaffinityfilter</li>
+</ul>
+<p>    与上面一个相反，它会尽量将instance部署到同一个计算节点上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Nova  server-group-create  --policy affinity group-1</span><br><span class="line">Nova boot --image IMAGEID --flavor 1 -hint group=group-1 ins1</span><br><span class="line">Nova boot --image IMAGEID --flavor 1 -hint group=group-1 ins2</span><br><span class="line">Nova boot --image IMAGEID --flavor 1 -hint group=group-1 ins3</span><br></pre></td></tr></table></figure>
+<p>3、weight</p>
+<p>    经过过滤，scheduler选出能够部署instance的计算节点，nova-scheduler会通过计算节点空闲的内存量计算权重值：空闲内存越多，权重越大。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 ------</div>
+    
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://s2.ax1x.com/2019/03/18/AmJ4HO.th.png" alt="某吱 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://s2.ax1x.com/2019/03/18/AmJ2g1.th.jpg" alt="某吱 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    某吱
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://Chainyinghao.github.io/2020/04/07/openstack-3/" title="openstack（四）">https://Chainyinghao.github.io/2020/04/07/openstack-3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://chainyinghao.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenStack/" rel="tag"><i class="fa fa-tag"></i> OpenStack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/07/openstack-2/" rel="next" title="openstack（三）">
+                <i class="fa fa-chevron-left"></i> openstack（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/07/openstack-4/" rel="prev" title="openstack（五）">
+                openstack（五） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/03/18/AmNfuq.png" alt="某吱">
+            
+              <p class="site-author-name" itemprop="name">某吱</p>
+              <p class="site-description motion-element" itemprop="description">世间所有的相遇，都是久别重逢</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index-1.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index-10.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Chainyinghao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:dyinghao@outlook.com.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#nova组件"><span class="nav-number">1.</span> <span class="nav-text">nova组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求流程"><span class="nav-number">2.</span> <span class="nav-text">请求流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度方式"><span class="nav-number">3.</span> <span class="nav-text">调度方式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">某吱</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">86.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://Chainyinghao.github.io/2020/04/07/openstack-3/';
+          this.page.identifier = '2020/04/07/openstack-3/';
+          this.page.title = 'openstack（四）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        av: AV, 
+        el: '#comments' ,
+        appId: 'xwjAmd2kJjN5tPDytwQsYVDK-gzGzoHsz',
+        appKey: 'KN48BrkKriUVfabEygYYUc6e',
+        placeholder: 'ヾ?≧?≦)o来啊，造作啊',
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":300,"hOffset":20,"vOffset":-200},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>

@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+      
+    
+    
+      `
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IPV6,">
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="听云轩" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="ipv6动态主机配置协议DHCPv6是针对ipv6编制方案设计，为主机分配ipv6地址/前缀和其他网络配置参数。 三种角色 DHCPV6 CLIENT     通过dhcpv6服务器进行交互，获取ipv6地址/前缀和网络配置信息，完成自身的地址配置功能。 DHCPV6 RELAY     dhcpv6的中继代理，负责转发来自客户端或服务器方向的dhcpv6报文，协助dhcpv6客户端和dh">
+<meta name="keywords" content="IPV6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ipv6（一）">
+<meta property="og:url" content="https://Chainyinghao.github.io/2020/03/08/ipv6/index.html">
+<meta property="og:site_name" content="听云轩">
+<meta property="og:description" content="ipv6动态主机配置协议DHCPv6是针对ipv6编制方案设计，为主机分配ipv6地址/前缀和其他网络配置参数。 三种角色 DHCPV6 CLIENT     通过dhcpv6服务器进行交互，获取ipv6地址/前缀和网络配置信息，完成自身的地址配置功能。 DHCPV6 RELAY     dhcpv6的中继代理，负责转发来自客户端或服务器方向的dhcpv6报文，协助dhcpv6客户端和dh">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s2.ax1x.com/2020/03/09/8pHLdJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/03/09/8pbUyT.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/03/09/8pL32q.png">
+<meta property="og:updated_time" content="2020-03-09T09:58:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ipv6（一）">
+<meta name="twitter:description" content="ipv6动态主机配置协议DHCPv6是针对ipv6编制方案设计，为主机分配ipv6地址/前缀和其他网络配置参数。 三种角色 DHCPV6 CLIENT     通过dhcpv6服务器进行交互，获取ipv6地址/前缀和网络配置信息，完成自身的地址配置功能。 DHCPV6 RELAY     dhcpv6的中继代理，负责转发来自客户端或服务器方向的dhcpv6报文，协助dhcpv6客户端和dh">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/03/09/8pHLdJ.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://Chainyinghao.github.io/2020/03/08/ipv6/">
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>ipv6（一） | 听云轩</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">听云轩</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我在等风，也在等你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Chainyinghao.github.io/2020/03/08/ipv6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="某吱">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/03/18/AmNfuq.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听云轩">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ipv6（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-08T16:29:34+08:00">
+                2020-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NA-NP/" itemprop="url" rel="index">
+                    <span itemprop="name">NA && NP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/08/ipv6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/08/ipv6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 共浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 min
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>    ipv6动态主机配置协议DHCPv6是针对ipv6编制方案设计，为主机分配ipv6地址/前缀和其他网络配置参数。</p>
+<h3 id="三种角色">三种角色</h3>
+<h4 id="DHCPV6-CLIENT">DHCPV6 CLIENT</h4>
+<p>    通过dhcpv6服务器进行交互，获取ipv6地址/前缀和网络配置信息，完成自身的地址配置功能。</p>
+<h4 id="DHCPV6-RELAY">DHCPV6 RELAY</h4>
+<p>    dhcpv6的中继代理，负责转发来自客户端或服务器方向的dhcpv6报文，协助dhcpv6客户端和dhcpv6服务器完成地址配置功能。一般情况下，dhcpv6客户端通过本地链路范围的组播地址与dhcpv6服务器通信，以获取ipv6地址/前缀和其他网络配置参数。如果服务器和客户端不在同一个链路范围内，则需要通过dhcpv6中继代理来转发报文，这样可以避免每个链路范围内都部署dhcpv6服务器，实现了集中管理。另外就是，这个中继代理不是必须的，如果dhcpv6的client和server位于同一个链路内，或者直接通过单播地址交互完成地址分配，那么这个时候就可以不需要它了。</p>
+<h4 id="DHCPV6-SERVER">DHCPV6 SERVER</h4>
+<p>    负责处理来自客户端或中继代理的地址分配，地址续租，地址释放等请求，为客户端分配ipv6地址/前缀和其他网络配置信息。</p>
+<h3 id="相关概念">相关概念</h3>
+<h4 id="1、组播地址">1、组播地址</h4>
+<p>    在dhcpv6协议中，客户端不用配置dhcpv6 server的ipv6地址，而是发送目的地址为组播地址的solicit报文来定位dhcpv6服务器。所用到的组播地址有两个：</p>
+<p>• ff02::1:2：所有dhcpv6服务器和中继代理的组播地址，这个地址是链路范围的，用于客户端和相邻服务器及中继之间通信。所有的dhcpv6和中继代理都是该组的成员</p>
+<p>• ff02::1:3：所有dhcpv6服务器组播地址，这个地址是站点范围的，用于中继代理和服务器支架你的通信，站点内的所有dhcpv6服务器都是成员。</p>
+<h4 id="2、端口号">2、端口号</h4>
+<p>    dhcpv6报文承载在UDPv6上，客户端监听的UDP目的端口号是546，服务器、中继代理监听的UDP端口号是547。</p>
+<h4 id="3、DUID">3、DUID</h4>
+<p>    每个服务器或者客户端有且只有一个唯一标识符，服务器使用DUID来识别不同的客户端，客户端则使用DUID来识别服务器。客户端和服务器的DUID的内容分别通过dhcpv6报文中的client identifier和server identifier选项来携带，两种选项的格式一样，通过option-code字段的取值来区分。</p>
+<h4 id="4、M-O标记（RA报文中）">4、M/O标记（RA报文中）</h4>
+<p>    ipv6自动执行无状态自动配置，并在相邻路由器发送的路由器公告消息中使用基于以下标记的配置协议：托管地址配置标记，也称为M标记，路由器通告的RA报文中的管理标记，当M标记为1时，表示链路上的iPv6主机采用dhcpv6方式获取ipv6地址/前缀。其他有状态配置标记，也称为O标记，路由器通告的RA报文中的其他配置标记，当O标志位为1时，表示链路上的ipv6主机采用dhcpv6方式获取ipv6地址/前缀以外的其他网络配置参数。</p>
+<p>• 当M和O标记均设置为0 的时候，此时不具有dhcpv6基础结构的网络，主机使用非链接本地地址的路由器公告以及其他方法（手动配置）来配置其他设置。</p>
+<p>• M和O均设置为1，dhcpv6用于这两种地址（链接本地地址和其他非链接本地地址）和其他配置设置。该组合成为dhcpv6有状态，其中dhcpv6将有状态地址分配分配给ipv6主机。</p>
+<p>• M设置为0，O设置为1，dhcpv6不用于分配地址，仅用来分配其他配置设置。相邻路由器配置为通告非链路本地地址前缀，ipv6主机从中生成无状态地址。此组合叫做dhcpv6无状态；只分配无状态配置设置。</p>
+<p>• M标记设置为1，O设置为0，这时dhcpv6用于地址配置，但不用于其他设置。</p>
+<h4 id="5、dhcpv6报文">5、dhcpv6报文</h4>
+<table>
+<thead>
+<tr>
+<th>报文类型</th>
+<th>dhcpv6报文</th>
+<th>dhcpv4报文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SOLICIT</td>
+<td>DHCP DISCOVER</td>
+<td>客户端使用solicit报文来确定dhcpv6服务器的位置</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ADVERTISE</td>
+<td>DHCP OFFER</td>
+<td>服务器通过发送advertise报文来对solicit报文进行回应，宣告自己的存在</td>
+</tr>
+<tr>
+<td>3</td>
+<td>REQUEST</td>
+<td>DHCP REQUEST</td>
+<td>客户端发送request报文来向dhcpv6服务器请求ipv6地址和其他配置信息</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CONFIRM</td>
+<td>-</td>
+<td>dhcpv6客户端向任意可达的dhcpv6服务器发送confirm报文检查自己目前获得的ipv6地址是否适用于它所连接的链路</td>
+</tr>
+<tr>
+<td>5</td>
+<td>RENEW</td>
+<td>DHCP REQUEST</td>
+<td>dhcpv6客户端向其提供地址和配置信息的DHCPv6服务器发送renew报文来延长地址的生存期并更新配置信息</td>
+</tr>
+<tr>
+<td>6</td>
+<td>REBIND</td>
+<td>DHCP REQUEST</td>
+<td>如果renew报文没有得到应答，dhcpv6客户端向任意可达的dhcpv6服务器发送rebind报文来续租</td>
+</tr>
+<tr>
+<td>7</td>
+<td>REPLY</td>
+<td>DHCP ACK/NAK</td>
+<td>dhcpv6服务器发送携带了地址和配置信息的reply消息来回应从dhcpv6客户端收到的solicit、request，renew，rebind报文。dhcpv6服务器发送携带配置信息的reply消息来回应收到的information-request报文。用来回应dhcpv6客户端发来的confirm、release、decline报文。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>RELEASE</td>
+<td>DHCP RELEASE</td>
+<td>DHCPv6客户端为其分配地址的dhcpv6服务器发送release报文，表明自己不再使用地址</td>
+</tr>
+<tr>
+<td>9</td>
+<td>DECLIEN</td>
+<td>DHCP DECLIEN</td>
+<td>DHCPv6的客户端向服务器发送decline报文，声明dhcpv6服务器分配的地址已被使用了</td>
+</tr>
+<tr>
+<td>10</td>
+<td>RECONFIGURE</td>
+<td>-</td>
+<td>服务器向客户端发送reconfigure报文，用于提示dhcpv6客户端有新的网络配置在dhcpv6服务器上</td>
+</tr>
+<tr>
+<td>11</td>
+<td>INFORATION-REQUEST</td>
+<td>DHCP INFORM</td>
+<td>客户端向服务器发送报文来请求除ipv6地址以外的网络配置信息</td>
+</tr>
+<tr>
+<td>12</td>
+<td>RELAY-FORWARD</td>
+<td>-</td>
+<td>中继代理通过relay-forward报文向dhcpv6服务器转发dhcpv6客户端请求报文</td>
+</tr>
+<tr>
+<td>13</td>
+<td>RELAY-REPLY</td>
+<td>-</td>
+<td>dhcpv6服务器向中继代理发送relay-reply报文，携带转发给客户端的报文</td>
+</tr>
+</tbody>
+</table>
+<h4 id="6、工作方式">6、工作方式</h4>
+<p>• dhcpv6有状态自动分配（stateful）。DHCPv6服务器自动配置ipv6地址/前缀，同时分配DNS、NIS、SNTP服务器等网络配置参数</p>
+<p>• dhcpv6无状态自动分配（SLAAC）。iPv6地址仍然通过路由通告方式自动生成，dhcp服务器只分配除ipv6地址以外的配置。</p>
+<h5 id="有状态自动分配（stateful）">有状态自动分配（stateful）</h5>
+<p>dhcpv6服务器为客户端分配地址/前缀的过程分为两类：</p>
+<p>• 四步交互分配过程</p>
+<p>    四步交互常用于网络中有多个dhcpv6服务器的情况，dhcpv6客户端首先通过组播发送solicit报文来定位可以为其提供服务dhcpv6服务器，在收到多个服务器的advertise报文后，根据dhcpv6服务器的优先级选择一个为其分配地址和配置信息的服务器，接着通过request/reply报文交互完成地址申请和分配过程。</p>
+<p>    dhcpv6服务器端如果没有配置使能两步交互，无论客户端报文中是否包含rapid commit选项，服务器都采用四步交互方式为客户端分配地址和配置信息。</p>
+<p><img src="https://s2.ax1x.com/2020/03/09/8pHLdJ.png" alt="8pHLdJ.png"></p>
+<p>    (1) 服务器首先发送solicit报文，请求dhcpv6服务器为其分配ipv6地址和网络配置参数</p>
+<p>    (2) 如果solicit报文中，没有携带rapid commit选项，或者服务器不支持快速分配的选项，则服务器回复advertise报文，通过客户端我可以给你分配地址和配置参数</p>
+<p>    (3) 如果客户端收到多个服务器回复的advertise报文，则根据advertise报文中的服务器优先级等参数，选择优先级最高的一台服务器并向所有的服务器发送request组播报文，其中携带了已选择服务器的DUID。</p>
+<p>    (4) 服务器收到后，回复reply报文，将地址和网络配置信息分配给客户端使用。</p>
+<p>• 两步交互</p>
+<p>    一般用在只有一个dhcpv6服务器的情况，dhcpv6客户端首先通过组播发送solicit报文来定位可以为其提供服务的dhcpv6服务器，服务器收到客户端的solicit报文后，为其分配地址和配置信息，直接回应reply报文，完成地址申请和分配过程。</p>
+<p><img src="https://s2.ax1x.com/2020/03/09/8pbUyT.png" alt="8pbUyT.png"></p>
+<h5 id="无状态自动分配-SLAAC">无状态自动分配(SLAAC)</h5>
+<p><img src="https://s2.ax1x.com/2020/03/09/8pL32q.png" alt="8pL32q.png"></p>
+<p>    客户端以组播方式向dhcpv6服务器发送information-request报文，该报文中携带option request选项，指定客户端想要从服务器获取的配置参数。</p>
+<p>    服务器收到报文后，为客户端分配网络配置参数，并单播发送reply报文，将网络配置参数返回给客户端。</p>
+<h3 id="IPv6地址-前缀分配">IPv6地址/前缀分配</h3>
+<h4 id="1、选择IPv6地址池">1、选择IPv6地址池</h4>
+<p>    DHCPv6服务器的接口可以绑定IPv6地址池，DHCPv6服务器将选择该IPv6地址池为接口下的DHCPv6客户端分配地址/前缀。对于存在中继的场景，DHCPv6服务器的接口可以不绑定IPv6地址池，而是根据报文中第一个不为0的“link-address”字段（标识DHCPv6客户端所在链路范围），选择与地址池中已配置的网络前缀或IPv6地址前缀属于同一链路范围的地址池。</p>
+<h4 id="2、选择IPv6地址-前缀">2、选择IPv6地址/前缀</h4>
+<p>    确定地址池后，DHCPv6服务器将按照下面步骤为DHCPv6客户端分配IPV6地址/前缀：</p>
+<ul>
+<li>
+<p>如果地址池中为客户端指定了地址/前缀，优先从地址池中选择与客户端DUID匹配的地址/前缀分配给客户端。</p>
+</li>
+<li>
+<p>如果客户端报文中的IA选项携带了有效的地址/前缀，优先从地址池中选择该地址/前缀分配给客户端。如果该地址/前缀在地址池中不可用，则另外分配一个空闲地址/前缀给客户端。如果IPV6前缀长度比指定分配长度大，则按指定分配长度来分配。</p>
+</li>
+<li>
+<p>从地址池中选择空闲地址/前缀分配给客户端，保留地址（例如RFC 2526中定义的任播地址）、冲突地址、已被分配的地址不能再分配给客户端。</p>
+</li>
+<li>
+<p>如果没有合适的IPv6地址/前缀可以分配，则分配失败。</p>
+</li>
+</ul>
+<h3 id="DAD机制">DAD机制</h3>
+<ol>
+<li>简介</li>
+</ol>
+<p>地址重复检测（DAD: Duplicate Address Detection）背景要求:</p>
+<ul>
+<li>节点在发送路由器公告（RA）之前要获得唯一的本地链路地址。</li>
+<li>IPv6自动配置要求在使用地址之前进行地址重复检测（DAD）。</li>
+</ul>
+<ol start="2">
+<li>标准DAD过程</li>
+</ol>
+<p>(1) 在发送邻居请求（NS）前，接口必须加入全节点组播地址(FF02::1)和生成IPv6地址的请求节点组播地址（solicited-node multicast address），即接收目的地址为这些IPv6地址的分组。</p>
+<p>(2)生成IPv6地址后随机延时一段时间后开始发送用于DAD的邻居请求（NS）消息。邻居请求（NS）消息的源地址为::，目的地址为临时单播地址的请求节点组播地址。在规定时间内没有收到应答的NA报文，则认为该单播地址在链路上是唯一的，可以分配给接口，如果收到应答NA报文，则表明该地址已被其它节点使用，不能配置给接口。</p>
+<p>(3) 在DAD过程中地址处于Tentative状态（“暂时的”）（IFA_F_TENTATIVE)。在完成DAD过程后，tenativeAddr将会被作为“首选的”地址（PreferedAddr）。若发现了重复地址，则该地址变为&quot;废弃的&quot;地址（deprecatedAddr）。</p>
+<p>    总得来说就是：未确定唯一性的地址不能使用，即不能接收目的地址或者发送源地址为此地址的分组，但是与DAD相关的邻居公告（NA）消息除外。每次系统默认一个主机在应用新的IP地址之前会发送3次DAD,如果三次以后均没有收到任何回应，那么该地址被认为是可以配置在接口上的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 ------</div>
+    
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持将鼓励我继续创作</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://s2.ax1x.com/2019/03/18/AmJ4HO.th.png" alt="某吱 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://s2.ax1x.com/2019/03/18/AmJ2g1.th.jpg" alt="某吱 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    某吱
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://Chainyinghao.github.io/2020/03/08/ipv6/" title="ipv6（一）">https://Chainyinghao.github.io/2020/03/08/ipv6/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://chainyinghao.github.io/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IPV6/" rel="tag"><i class="fa fa-tag"></i> IPV6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/08/k8s-9/" rel="next" title="k8s（十）">
+                <i class="fa fa-chevron-left"></i> k8s（十）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/09/ipv6-1/" rel="prev" title="ipv6">
+                ipv6 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/03/18/AmNfuq.png" alt="某吱">
+            
+              <p class="site-author-name" itemprop="name">某吱</p>
+              <p class="site-description motion-element" itemprop="description">世间所有的相遇，都是久别重逢</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index-1.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index-10.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Chainyinghao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:dyinghao@outlook.com.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#三种角色"><span class="nav-number">1.</span> <span class="nav-text">三种角色</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DHCPV6-CLIENT"><span class="nav-number">1.1.</span> <span class="nav-text">DHCPV6 CLIENT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DHCPV6-RELAY"><span class="nav-number">1.2.</span> <span class="nav-text">DHCPV6 RELAY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DHCPV6-SERVER"><span class="nav-number">1.3.</span> <span class="nav-text">DHCPV6 SERVER</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关概念"><span class="nav-number">2.</span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、组播地址"><span class="nav-number">2.1.</span> <span class="nav-text">1、组播地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、端口号"><span class="nav-number">2.2.</span> <span class="nav-text">2、端口号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、DUID"><span class="nav-number">2.3.</span> <span class="nav-text">3、DUID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、M-O标记（RA报文中）"><span class="nav-number">2.4.</span> <span class="nav-text">4、M/O标记（RA报文中）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、dhcpv6报文"><span class="nav-number">2.5.</span> <span class="nav-text">5、dhcpv6报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、工作方式"><span class="nav-number">2.6.</span> <span class="nav-text">6、工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#有状态自动分配（stateful）"><span class="nav-number">2.6.1.</span> <span class="nav-text">有状态自动分配（stateful）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#无状态自动分配-SLAAC"><span class="nav-number">2.6.2.</span> <span class="nav-text">无状态自动分配(SLAAC)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6地址-前缀分配"><span class="nav-number">3.</span> <span class="nav-text">IPv6地址/前缀分配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、选择IPv6地址池"><span class="nav-number">3.1.</span> <span class="nav-text">1、选择IPv6地址池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、选择IPv6地址-前缀"><span class="nav-number">3.2.</span> <span class="nav-text">2、选择IPv6地址/前缀</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAD机制"><span class="nav-number">4.</span> <span class="nav-text">DAD机制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">某吱</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">86.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://Chainyinghao.github.io/2020/03/08/ipv6/';
+          this.page.identifier = '2020/03/08/ipv6/';
+          this.page.title = 'ipv6（一）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        av: AV, 
+        el: '#comments' ,
+        appId: 'xwjAmd2kJjN5tPDytwQsYVDK-gzGzoHsz',
+        appKey: 'KN48BrkKriUVfabEygYYUc6e',
+        placeholder: 'ヾ?≧?≦)o来啊，造作啊',
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":300,"hOffset":20,"vOffset":-200},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>
